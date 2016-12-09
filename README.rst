@@ -8,4 +8,4 @@ Boilerplate-bot
     :target: https://coveralls.io/github/botstory/boilerplate-bot?branch=develop
 
 
-Good place to start your bot. based on `BotStory framework <https://github.com/hyzhak/bot-story>`_.
+Good place to start your bot based on `BotStory framework <https://github.com/botstory/bot-story>`_.
