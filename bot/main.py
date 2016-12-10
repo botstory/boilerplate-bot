@@ -1,5 +1,5 @@
 import asyncio
-from botstory import story
+import botstory
 from botstory.integrations import aiohttp, fb, mongodb
 from botstory.integrations.ga import tracker
 import logging
@@ -7,9 +7,15 @@ import os
 
 from . import stories
 
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('echo-bot')
 logger.setLevel(logging.DEBUG)
+
+
+story = botstory.Story()
+
+stories.setup(story)
 
 
 def init(auto_start, fake_http_session):
@@ -80,7 +86,7 @@ async def start(auto_start=True, fake_http_session=None):
 async def stop():
     logger.info('stop')
     await story.stop()
-    story.clear(clear_library=False)
+    story.clear()
 
 
 def main(forever=True):
