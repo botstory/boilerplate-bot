@@ -1,11 +1,15 @@
 import asyncio
+import argparse
 import botstory
 from botstory.integrations import aiohttp, fb, mongodb
 from botstory.integrations.ga import tracker
 import logging
 import os
+import sys
 
 from boilerplate import stories
+
+BOT_NAME='boiledplate'
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('boilerplate-bot')
@@ -85,19 +89,30 @@ class Bot:
         self.story.clear()
 
 
+def parse_args(args):
+    parser = argparse.ArgumentParser(prog=BOT_NAME)
+    parser.add_argument('--setup', action='store_true', default=False, help='setup bot')
+    parser.add_argument('--start', action='store_true', default=False, help='start bot')
+    return parser.parse_args(args), parser
+
+
 def main(forever=True):
-    bot = Bot()
-    logging.basicConfig(level=logging.DEBUG)
-
-    loop = asyncio.get_event_loop()
-    app = loop.run_until_complete(bot.start(auto_start=forever))
-
-    # and run forever
-    if forever:
-        bot.story.forever(loop)
-
-    # or you can use gunicorn for an app of http interface
-    return app
+    # bot = Bot()
+    # logging.basicConfig(level=logging.DEBUG)
+    #
+    # loop = asyncio.get_event_loop()
+    # app = loop.run_until_complete(bot.start(auto_start=forever))
+    #
+    # # and run forever
+    # if forever:
+    #     bot.story.forever(loop)
+    #
+    # # or you can use gunicorn for an app of http interface
+    # return app
+    parsed, parser = parse_args(sys.argv[1:])
+    if not parsed.start and not parsed.setup:
+        parser.print_help()
+    print(parsed)
 
 
 if __name__ == '__main__':
