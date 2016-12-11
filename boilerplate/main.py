@@ -5,10 +5,10 @@ from botstory.integrations.ga import tracker
 import logging
 import os
 
-from . import stories
+from boilerplate import stories
 
 logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger('echo-bot')
+logger = logging.getLogger('boilerplate-bot')
 logger.setLevel(logging.DEBUG)
 
 story = None
@@ -42,7 +42,7 @@ def init(auto_start, fake_http_session):
 
     # Interface for HTTP
     http = story.use(aiohttp.AioHttpInterface(
-        port=os.environ.get('API_PORT', 8080),
+        port=int(os.environ.get('API_PORT', 8080)),
         auto_start=auto_start,
     ))
 
