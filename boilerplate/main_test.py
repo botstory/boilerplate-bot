@@ -6,13 +6,13 @@ from . import main, test_utils
 
 @pytest.mark.asyncio
 async def test_start_bot(event_loop):
-    async with test_utils.SandboxBot(event_loop, main) as bot:
-        assert len(bot.fb.history) == 0
+    async with test_utils.SandboxBot(event_loop, main.Bot()) as sandbox:
+        assert len(sandbox.fb.history) == 0
 
 
 @pytest.mark.asyncio
 async def test_text_echo(event_loop):
-    async with test_utils.SandboxBot(event_loop, main) as bot:
+    async with test_utils.SandboxBot(event_loop, main.Bot()) as sandbox:
         await test_utils.post('http://0.0.0.0:{}/webhook'.format(os.environ.get('API_PORT', 8080)),
                               json={
                                   "object": "page",
@@ -36,8 +36,8 @@ async def test_text_echo(event_loop):
                                   }]
                               })
 
-        assert len(bot.fb.history) == 1
-        assert await bot.fb.history[0]['request'].json() == {
+        assert len(sandbox.fb.history) == 1
+        assert await sandbox.fb.history[0]['request'].json() == {
             'message': {
                 'text': '<React on text message>'
             },
