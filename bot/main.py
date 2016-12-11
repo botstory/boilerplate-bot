@@ -7,18 +7,18 @@ import os
 
 from . import stories
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('echo-bot')
 logger.setLevel(logging.DEBUG)
 
-
-story = botstory.Story()
-
-stories.setup(story)
+story = None
 
 
 def init(auto_start, fake_http_session):
+    global story
+    story = botstory.Story()
+    stories.setup(story)
+
     story.use(fb.FBInterface(
         # will show on initial screen
         greeting_text='Hello dear {{user_first_name}}! '
