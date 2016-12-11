@@ -60,12 +60,6 @@ class Bot:
 
         # for test purpose
         http.session = fake_http_session
-
-        # connect bot specific stories
-
-        logger.debug('self.story.stories_library.message_handling_stories')
-        logger.debug(self.story.stories_library.message_handling_stories)
-
         return http
 
     async def setup(self, fake_http_session=None):
@@ -94,7 +88,7 @@ def setup():
 def start(forever=False):
     bot = Bot()
     loop = asyncio.get_event_loop()
-    app = loop.run_until_complete(bot.start())
+    app = loop.run_until_complete(bot.start(auto_start=forever))
     if forever:
         bot.story.forever(loop)
     return app
@@ -119,4 +113,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main(forever=True)
+    main()

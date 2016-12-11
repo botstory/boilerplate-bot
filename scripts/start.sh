@@ -19,4 +19,4 @@ echo " Start"
 echo ""
 echo "====================================================="
 
-#gunicorn echo.gunicorn_runner:app --bind 0.0.0.0:${API_PORT} --log-file - --reload --worker-class aiohttp.worker.GunicornWebWorker
+gunicorn boilerplate.wsgi:app --bind 0.0.0.0:${API_PORT} --log-file - --reload --worker-class aiohttp.worker.GunicornWebWorker
