@@ -1,3 +1,4 @@
+import aiohttp
 import contextlib
 from io import StringIO
 import os
@@ -65,7 +66,7 @@ def test_parser_start_arguments():
     assert parsed.start is True
 
 
-def test_show_help_if_no_any_arguments(mocker):
+def test_show_help_if_no_any_arguments():
     main.sys.argv = []
     temp_stdout = StringIO()
     with contextlib.redirect_stdout(temp_stdout):
@@ -74,3 +75,17 @@ def test_show_help_if_no_any_arguments(mocker):
     assert 'help' in output
     assert 'setup' in output
     assert 'start' in output
+
+
+def test_setup_bot_on_setup_argument(mocker):
+    main.sys.argv = ['', '--setup']
+    handler = mocker.patch('boilerplate.main.setup')
+    main.main()
+    assert handler.called is True
+
+
+def test_start_bot_on_setup_argument(mocker):
+    main.sys.argv = ['', '--start']
+    handler = mocker.patch('boilerplate.main.start')
+    main.main()
+    assert handler.called is True

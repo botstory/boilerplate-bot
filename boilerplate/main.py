@@ -9,7 +9,7 @@ import sys
 
 from boilerplate import stories
 
-BOT_NAME='boiledplate'
+BOT_NAME = 'boiledplate'
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('boilerplate-bot')
@@ -110,9 +110,21 @@ def main(forever=True):
     # # or you can use gunicorn for an app of http interface
     # return app
     parsed, parser = parse_args(sys.argv[1:])
-    if not parsed.start and not parsed.setup:
-        parser.print_help()
-    print(parsed)
+    if parsed.setup:
+        return setup()
+
+    if parsed.start:
+        return start()
+
+    parser.print_help()
+
+
+def setup():
+    pass
+
+
+def start():
+    pass
 
 
 if __name__ == '__main__':
