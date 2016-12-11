@@ -11,7 +11,6 @@ from boilerplate import stories
 
 BOT_NAME = 'boiledplate'
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('boilerplate-bot')
 logger.setLevel(logging.DEBUG)
 
@@ -75,18 +74,30 @@ class Bot:
         await self.story.setup()
 
     async def start(self, auto_start=True, fake_http_session=None):
+        logger.info('start')
         http = self.init(auto_start, fake_http_session)
-        # start bot
         await self.story.start()
-
-        logger.info('started')
-
         return http.app
 
     async def stop(self):
         logger.info('stop')
         await self.story.stop()
         self.story.clear()
+
+
+def setup():
+    bot = Bot()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(bot.setup())
+
+
+def start(forever=False):
+    bot = Bot()
+    loop = asyncio.get_event_loop()
+    app = loop.run_until_complete(bot.start())
+    if forever:
+        bot.story.forever(loop)
+    return app
 
 
 def parse_args(args):
@@ -96,35 +107,15 @@ def parse_args(args):
     return parser.parse_args(args), parser
 
 
-def main(forever=True):
-    # bot = Bot()
-    # logging.basicConfig(level=logging.DEBUG)
-    #
-    # loop = asyncio.get_event_loop()
-    # app = loop.run_until_complete(bot.start(auto_start=forever))
-    #
-    # # and run forever
-    # if forever:
-    #     bot.story.forever(loop)
-    #
-    # # or you can use gunicorn for an app of http interface
-    # return app
+def main():
     parsed, parser = parse_args(sys.argv[1:])
     if parsed.setup:
         return setup()
 
     if parsed.start:
-        return start()
+        return start(forever=True)
 
     parser.print_help()
-
-
-def setup():
-    pass
-
-
-def start():
-    pass
 
 
 if __name__ == '__main__':

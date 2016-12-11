@@ -3,6 +3,7 @@ import contextlib
 from io import StringIO
 import os
 import pytest
+from unittest.mock import Mock
 
 from . import main, test_utils
 
