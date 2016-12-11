@@ -1,13 +1,16 @@
 import asyncio
+import argparse
 import botstory
 from botstory.integrations import aiohttp, fb, mongodb
 from botstory.integrations.ga import tracker
 import logging
 import os
+import sys
 
 from boilerplate import stories
 
-logging.basicConfig(level=logging.DEBUG)
+BOT_NAME = 'boiledplate'
+
 logger = logging.getLogger('boilerplate-bot')
 logger.setLevel(logging.DEBUG)
 
@@ -57,12 +60,6 @@ class Bot:
 
         # for test purpose
         http.session = fake_http_session
-
-        # connect bot specific stories
-
-        logger.debug('self.story.stories_library.message_handling_stories')
-        logger.debug(self.story.stories_library.message_handling_stories)
-
         return http
 
     async def setup(self, fake_http_session=None):
@@ -71,12 +68,9 @@ class Bot:
         await self.story.setup()
 
     async def start(self, auto_start=True, fake_http_session=None):
+        logger.info('start')
         http = self.init(auto_start, fake_http_session)
-        # start bot
         await self.story.start()
-
-        logger.info('started')
-
         return http.app
 
     async def stop(self):
@@ -85,20 +79,38 @@ class Bot:
         self.story.clear()
 
 
-def main(forever=True):
+def setup():
     bot = Bot()
-    logging.basicConfig(level=logging.DEBUG)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(bot.setup())
 
+
+def start(forever=False):
+    bot = Bot()
     loop = asyncio.get_event_loop()
     app = loop.run_until_complete(bot.start(auto_start=forever))
-
-    # and run forever
     if forever:
         bot.story.forever(loop)
-
-    # or you can use gunicorn for an app of http interface
     return app
 
 
+def parse_args(args):
+    parser = argparse.ArgumentParser(prog=BOT_NAME)
+    parser.add_argument('--setup', action='store_true', default=False, help='setup bot')
+    parser.add_argument('--start', action='store_true', default=False, help='start bot')
+    return parser.parse_args(args), parser
+
+
+def main():
+    parsed, parser = parse_args(sys.argv[1:])
+    if parsed.setup:
+        return setup()
+
+    if parsed.start:
+        return start(forever=True)
+
+    parser.print_help()
+
+
 if __name__ == '__main__':
-    main(forever=True)
+    main()
