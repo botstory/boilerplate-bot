@@ -1,3 +1,3 @@
 require('./styles/main.scss');
 
-console.log('hello world!');
+console.log('Boilerplate bot!');
