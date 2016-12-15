@@ -1,11 +1,10 @@
 require('babel-polyfill');
+
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-
-
-// Webpack config for creating the production bundle.
 var path = require('path');
 var webpack = require('webpack');
-// var CleanPlugin = require('clean-webpack-plugin');
+
 
 var projectRootPath = path.resolve(__dirname, '../');
 var assetsPath = path.resolve(projectRootPath, './dist');
@@ -44,6 +43,11 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin([assetsPath], {
+      root: projectRootPath,
+      verbose: true,
+      dry: false,
+    }),
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     })
