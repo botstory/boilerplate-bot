@@ -90,4 +90,7 @@ ENV/
 
 # IDE
 .idea/
-g
+
+# frontend
+static/dist
+static/node_modules
