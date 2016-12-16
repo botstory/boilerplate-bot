@@ -13,7 +13,7 @@ Good place to start your bot based on `BotStory framework <https://github.com/bo
 Stack
 =====
 
-- :rocket: auto deploying `landing page <https://github.com/botstory/boilerplate-bot-landing>`_
+- :rocket: auto deploying `landing page <https://botstory.github.io/boilerplate-bot/>`_ (`sources <https://github.com/botstory/boilerplate-bot-landing>`_)
 - :snake: `AsyncIO <https://docs.python.org/3/library/asyncio.html>`_ and `AioHTTP <http://aiohttp.readthedocs.io/en/stable/>`_
 - `Mongodb <https://www.mongodb.com/>`_ - storage for user and session
 - :ship: `Docker Container <https://www.docker.com/>`_ for Mongo and Python
