@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "boilerplate-bot";
+/******/ 	__webpack_require__.p = "/boilerplate-bot";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 5);
@@ -432,4 +432,4 @@ module.exports = __webpack_require__(0);
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=main-a8303e16ad0bf513cde6.js.map
+//# sourceMappingURL=main-a2a4e7f1b5392ece5971.js.map
