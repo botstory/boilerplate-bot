@@ -21,7 +21,7 @@ Stack
 
 `:ship:` `Docker Container <https://www.docker.com/>`_ for Mongo and Python
 
-`:tractor:` `Travic-CI <https://travis-ci.org/>`_ - test and coverage
+`:tractor:` `Travis-CI <https://travis-ci.org/>`_ - test and coverage
 
 Instruction
 ~~~~~~~~~~~
@@ -31,4 +31,3 @@ Test performance of webhook
 .. code-block:: bash
 
     WEBHOOK_URL=<url-to-webhook-of-your-bot> ./scripts/performance.sh
-
