@@ -31,3 +31,10 @@ Test performance of webhook
 .. code-block:: bash
 
     WEBHOOK_URL=<url-to-webhook-of-your-bot> ./scripts/performance.sh
+
+
+Bot Checklist
+~~~~~~~~~~~~~
+Common checklist for common bot
+
+- [ ] Mindmap. Could use `Coggle <https://coggle.it/>`_. `Example <https://coggle.it/diagram/WcgsjGjgVAABxW_M>`_
