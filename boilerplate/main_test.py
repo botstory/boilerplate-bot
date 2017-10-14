@@ -44,6 +44,7 @@ async def test_text_echo(event_loop):
                                   }]
                               })
 
+        # use it because we spawn fb handler process and return 200Ok
         await asyncio.sleep(0.1)
 
         assert len(sandbox.fb.history) == initial_history_length + 1
