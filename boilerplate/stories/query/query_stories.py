@@ -1,5 +1,3 @@
-import rssbot
-
 from botstory.middlewares import any, option, sticker, text
 import emoji
 import logging
@@ -8,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def setup(story):
-    @story.on(text.EqualCaseIgnore('earth'))
+    @story.on(text.EqualCaseIgnore('hello, world!'))
     def earth_message():
         @story.part()
         async def say_something(ctx):

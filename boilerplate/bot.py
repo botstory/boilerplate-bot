@@ -83,6 +83,7 @@ class Bot:
     async def start(self, auto_start=True, fake_http_session=None):
         logger.info('# start')
         http, db_integration = self.init(auto_start, fake_http_session)
+        await self.story.setup()
         await self.story.start()
         for document in DOCUMENTS:
             document.setup(db_integration.db)
