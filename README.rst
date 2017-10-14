@@ -15,7 +15,7 @@ Stack
 
 `:rocket:` auto deploying `landing page <https://botstory.github.io/boilerplate-bot/>`_ (`sources <https://github.com/botstory/boilerplate-bot-landing>`_)
 
-`:snake:` `AsyncIO <https://docs.python.org/3/library/asyncio.html>`_ and `AioHTTP <http://aiohttp.readthedocs.io/en/stable/>`_
+`:snake:` Python 3.6 and `AsyncIO <https://docs.python.org/3/library/asyncio.html>`_ and `AioHTTP <http://aiohttp.readthedocs.io/en/stable/>`_
 
 `:package:` `Mongodb <https://www.mongodb.com/>`_ - storage for user and session
 
@@ -38,3 +38,4 @@ Bot Checklist
 Common checklist for common bot
 
 - [ ] Mindmap. Could use `Coggle <https://coggle.it/>`_. `Example <https://coggle.it/diagram/WcgsjGjgVAABxW_M>`_
+- [ ] Describe bot profile at *<chatbot-name>/__init__.py*.
