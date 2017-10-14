@@ -1,55 +1,65 @@
 import aiohttp
+import asyncio
+import botstory
 import contextlib
+import emoji
 from io import StringIO
 import os
 import pytest
 from unittest.mock import Mock
 
-from . import main, test_utils
+from boilerplate import bot, main, test_utils
 
 
 @pytest.mark.asyncio
 async def test_start_bot(event_loop):
-    async with test_utils.SandboxBot(event_loop, main.Bot()) as sandbox:
-        assert len(sandbox.fb.history) == 0
+    async with test_utils.SandboxBot(event_loop, bot.Bot()) as sandbox:
+        assert len(sandbox.fb.history) > 0
 
 
 @pytest.mark.asyncio
-async def test_text_echo(event_loop):
-    async with test_utils.SandboxBot(event_loop, main.Bot()) as sandbox:
+async def test_earth_message(event_loop):
+    async with test_utils.SandboxBot(event_loop, bot.Bot()) as sandbox:
+        initial_history_length = len(sandbox.fb.history)
         await test_utils.post('http://0.0.0.0:{}/webhook'.format(os.environ.get('API_PORT', 8080)),
                               json={
-                                  "object": "page",
-                                  "entry": [{
-                                      "id": "PAGE_ID",
-                                      "time": 1458692752478,
-                                      "messaging": [{
-                                          "sender": {
-                                              "id": "USER_ID"
+                                  'object': 'page',
+                                  'entry': [{
+                                      'id': 'PAGE_ID',
+                                      'time': 1458692752478,
+                                      'messaging': [{
+                                          'sender': {
+                                              'id': 'USER_ID'
                                           },
-                                          "recipient": {
-                                              "id": "PAGE_ID"
+                                          'recipient': {
+                                              'id': 'PAGE_ID'
                                           },
-                                          "timestamp": 1458692752478,
-                                          "message": {
-                                              "mid": "mid.1457764197618:41d102a3e1ae206a38",
-                                              "seq": 73,
-                                              "text": "hello, world!",
+                                          'timestamp': 1458692752478,
+                                          'message': {
+                                              'mid': 'mid.1457764197618:41d102a3e1ae206a38',
+                                              'seq': 73,
+                                              'text': 'hello, world!',
                                           }
                                       }]
                                   }]
                               })
 
-        assert len(sandbox.fb.history) == 1
-        assert await sandbox.fb.history[0]['request'].json() == {
+        # use it because we spawn fb handler process and return 200Ok
+        await asyncio.sleep(0.1)
+
+        # we can't use initial_history_length + 1
+        # because it is very likely that we don't have user USER_ID in our user's collection
+        # and fb handler will ask user's profile meanwhile process income message
+        assert len(sandbox.fb.history) > initial_history_length
+        assert await sandbox.fb.history[-1]['request'].json() == {
             'message': {
-                'text': '<React on text message>'
+                'text': emoji.emojize(':earth:', use_aliases=False),
             },
             'recipient': {'id': 'USER_ID'},
         }
 
 
-def test_parser_empry_arguments():
+def test_parser_empty_arguments():
     parsed, _ = main.parse_args([])
     assert parsed.setup is not True
     assert parsed.start is not True
