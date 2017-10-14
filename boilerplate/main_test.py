@@ -18,7 +18,7 @@ async def test_start_bot(event_loop):
 
 
 @pytest.mark.asyncio
-async def test_text_echo(event_loop):
+async def test_earth_message(event_loop):
     async with test_utils.SandboxBot(event_loop, bot.Bot()) as sandbox:
         initial_history_length = len(sandbox.fb.history)
         await test_utils.post('http://0.0.0.0:{}/webhook'.format(os.environ.get('API_PORT', 8080)),
@@ -47,7 +47,10 @@ async def test_text_echo(event_loop):
         # use it because we spawn fb handler process and return 200Ok
         await asyncio.sleep(0.1)
 
-        assert len(sandbox.fb.history) == initial_history_length + 1
+        # we can't use initial_history_length + 1
+        # because it is very likely that we don't have user USER_ID in our user's collection
+        # and fb handler will ask user's profile meanwhile process income message
+        assert len(sandbox.fb.history) > initial_history_length
         assert await sandbox.fb.history[-1]['request'].json() == {
             'message': {
                 'text': emoji.emojize(':earth:', use_aliases=False),
